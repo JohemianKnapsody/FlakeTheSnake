@@ -2,9 +2,20 @@ import cv2
 import numpy as np
 import colorsys
 
-image_1 = cv2.imread('/home/pi/Downloads/16.jpg')
+image_corners = cv2.imread('/home/pi/Downloads/optics_update/23.jpg')
+image_centre = cv2.imread('/home/pi/Downloads/optics_update/24.jpg')
+
+centre_cropped = image_corners[0:480, 240:400]
+
+image_0=image_centre
+image_0[0:480, 240:400] = centre_cropped
+
+cv2.imshow('OG',image_0)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+image_1 = cv2.imread('/home/pi/Downloads/optics_update/1.jpg')
 image_1_store = image_1
-image_0 = cv2.imread('/home/pi/Downloads/background_1.jpg')
 image_neutral= image_0
 
 kernel = np.ones((3,3),np.float32)/9
@@ -41,7 +52,7 @@ height, width = image_neutral.shape[:2]
             
 for x in range(0,width):
     for y in range(0,height):
-        if image_neutral[y,x][0]<=137 and image_neutral[y,x][0]>=128 and image_neutral[y,x][1]<=143 and image_neutral[y,x][1]>=133 and image_neutral[y,x][2]<=127 and image_neutral[y,x][2]>=118 and hsv_image[y,x][0]<=84 and hsv_image[y,x][0]>=77 and hsv_image[y,x][1]<=33 and hsv_image[y,x][1]>=13 and hsv_image[y,x][2]<=143 and hsv_image[y,x][2]>=130:
+        if image_neutral[y,x][0]<=170 and image_neutral[y,x][0]>=120 and image_neutral[y,x][1]<=210 and image_neutral[y,x][1]>=155 and image_neutral[y,x][2]<=225 and image_neutral[y,x][2]>=171 and hsv_image[y,x][0]<=35 and hsv_image[y,x][0]>=0 and hsv_image[y,x][1]<=80 and hsv_image[y,x][1]>=32 and hsv_image[y,x][2]<=220 and hsv_image[y,x][2]>=142:
             image_neutral[y,x]=[200, 200, 200]
         else:
             image_neutral[y,x]=[0, 0, 0]
@@ -80,9 +91,9 @@ for c in contours:
     center = (int(x), int(y))
     radius = int(radius)
     
-    if 1 < radius:
+    if 10 < radius:
         #and draw the cirlce in blue
-        image_neutral = cv2.circle(image_neutral, center, radius, (255, 0, 0), 2)
+        image_neutral = cv2.circle(image_neutral, center, radius, (255, 0, 0), 1)
         print(center)
             
 cv2.imshow('OG',image_neutral)
